@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-* [Purpose](#purpose)
+* [Description](#description)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Contributions](#contributions)
 * [License](#license)
 
-## Purpose
+## Description
 
 Read email alerts that have been received from the CrimeMapping.com website.
 This library is designed to read plain text emails that are sent from the site.
