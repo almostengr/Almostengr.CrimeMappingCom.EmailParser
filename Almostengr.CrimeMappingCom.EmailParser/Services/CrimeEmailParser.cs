@@ -1,5 +1,6 @@
 using Almostengr.CrimeMappingCom.EmailParser.Services.Interfaces;
 using Almostengr.CrimeMappingCom.EmailParser.Services.Resources;
+using Almostengr.CrimeMappingCom.EmailParser.Shared;
 
 namespace Almostengr.CrimeMappingCom.EmailParser.Services;
 

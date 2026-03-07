@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Almostengr.CrimeMappingCom.EmailParser.Services.Interfaces;
 using Almostengr.CrimeMappingCom.EmailParser.Services.Resources;
+using Almostengr.CrimeMappingCom.EmailParser.Shared;
 using Microsoft.Extensions.Options;
 
 namespace Almostengr.CrimeMappingCom.EmailParser.Services;
@@ -21,9 +22,7 @@ public class JsonCrimeWriter : IJsonCrimeWriter
         ArgumentNullException.ThrowIfNull(incident);
         ArgumentException.ThrowIfNullOrWhiteSpace(_settings.OutputDirectory, nameof(_settings.OutputDirectory));
 
-        var path = Path.Combine(_settings.OutputDirectory, "crime", $"{incident.OccurredAt:yyyymmddhhMM}.json");
-        // var path =
-        //     $"crime-data/{incident.OccurredAt:yyyy/MM/dd}.json";
+        var path = Path.Combine(_settings.OutputDirectory, $"{incident.OccurredAt:yyyymmddhhMM}.json");
 
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
 

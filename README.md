@@ -8,6 +8,7 @@
 * [Contributions](#contributions)
 * [License](#license)
 
+
 ## Description
 
 Read email alerts that have been received from the CrimeMapping.com website.
@@ -37,17 +38,64 @@ The package will download and install.
 
 ## Usage
 
-Use the example code below for reading emails. Each of the emails will be written
-to a separate file.
+### appsettings.json
+
+Add the below to your appsettings.json file.  This file is used to configure the 
+library and its functions.
+
+```json
+{
+    "CrimeMappingSettings": { 
+        "Hostname": "mail.example.come",
+        "Username" : "emailuser",
+        "Password":  "emailpass",
+        "PortNumber": 993,
+        "OutputDirectory" : "/home/almostengr/crimedata",
+    }
+}
+```
+
+#### Hostname
+
+The address of the email server that will be receiving the email alerts.
+
+#### Username 
+
+The username of the account that will be receiving the email alerts.
+
+#### Password
+
+The password of the email account that will be receiving the email alerts.
+
+#### PortNumber
+
+The port number of the server that should be used to connect to the email server. 
+
+#### OutputDirectory
+
+The location on the file system, that the json files will be written to for further use.
+
+
+### With Dependency Injection
+
+In the Program.cs file, add the below to include all services within this library.
 
 ```csharp
-var reader = new ImapEmailReader();
-var parser = new CrimeEmailParser();
-var writer = new JsonCrimeWriter();
-var settings = new CrimeMappingSettings();
+builder.Services.AddCrimeMappingServices(builder.Configuration);
+```
 
-var emails = await reader.GetUnreadAsync(
-    settings.Hostname, settings.PortNumber, settings.Username, settings.Password);
+### Console Application (No Dependency Injection)
+
+In the ```Main()``` method within the Program.cs file or in a service method, add
+the below.
+
+```csharp
+var settings = new IOptions<CrimeMappingSettings>();
+var reader = new ImapEmailReader(settings);
+var parser = new CrimeEmailParser(settings);
+var writer = new JsonCrimeWriter(settings);
+
+var emails = await reader.GetUnreadAsync();
 
 foreach (var email in emails)
 {
@@ -63,9 +111,16 @@ foreach (var email in emails)
 
 ## Contributions
 
-To contribute, create a pull request with your code changes to the project repository.
+To contribute, you may 
+
+* create an issue using the appropriate template on the project repository.
+* create a pull request with your code changes to the project repository.
+
+### Project Repository
+
+[https://github.com/almostengr/Almostengr.CrimeMappingCom.EmailParser](https://github.com/almostengr/Almostengr.CrimeMappingCom.EmailParser)
 
 
 ## License
 
-See LICENSE for more details.
+GNU GENERAL PUBLIC LICENSE. See LICENSE for more details.
