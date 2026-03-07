@@ -46,7 +46,7 @@ library and its functions.
 ```json
 {
     "CrimeMappingSettings": { 
-        "Hostname": "mail.example.come",
+        "Hostname": "mail.example.com",
         "Username" : "emailuser",
         "Password":  "emailpass",
         "PortNumber": 993,

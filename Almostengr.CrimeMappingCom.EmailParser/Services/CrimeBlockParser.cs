@@ -8,11 +8,16 @@ public class CrimeBlockParser : ICrimeBlockParser
     public CrimeIncidentResource Parse(string block)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(block);
-        
+
         var lines = block
             .Split('\n', StringSplitOptions.RemoveEmptyEntries)
             .Select(x => x.Trim())
             .ToArray();
+
+        if (lines.Length != 6)
+        {
+            throw new FormatException("Unexpected crime block format.");
+        }
 
         return new CrimeIncidentResource
         {
