@@ -128,3 +128,10 @@ To contribute, you may
 ## License
 
 GNU GENERAL PUBLIC LICENSE. See LICENSE for more details.
+
+
+## Project Roadmap
+
+Some additional features that may be considered or implemented in the future
+
+* support POP email
