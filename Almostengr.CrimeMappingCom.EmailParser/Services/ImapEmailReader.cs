@@ -21,10 +21,10 @@ public class ImapEmailReader : IImapEmailReader
 
     public async Task<List<MimeMessage>> GetUnreadAsync()
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(_settings.Hostname, nameof(_settings.Hostname)); 
+        ArgumentException.ThrowIfNullOrWhiteSpace(_settings.Hostname, nameof(_settings.Hostname));
         ArgumentException.ThrowIfNullOrWhiteSpace(_settings.Username, nameof(_settings.Username));
         ArgumentException.ThrowIfNullOrWhiteSpace(_settings.Password, nameof(_settings.Password));
-        
+
         using var client = new ImapClient();
 
         await client.ConnectAsync(_settings.Hostname, _settings.PortNumber, true);
@@ -38,9 +38,12 @@ public class ImapEmailReader : IImapEmailReader
         foreach (var uid in await inbox.SearchAsync(SearchQuery.NotSeen))
         {
             var message = await inbox.GetMessageAsync(uid);
-            results.Add(message);
 
-            await inbox.AddFlagsAsync(uid, MessageFlags.Seen, true);
+            if (message.Subject.Contains("crimemapping.com", StringComparison.CurrentCultureIgnoreCase))
+            {
+                results.Add(message);
+                await inbox.AddFlagsAsync(uid, MessageFlags.Seen, true);
+            }
         }
 
         return results;

@@ -14,10 +14,16 @@ public class CrimeBlockParser : ICrimeBlockParser
             .Select(x => x.Trim())
             .ToArray();
 
-        if (lines.Length != 6)
+        const int LINES_EXPECTED = 6;
+        const int LAST_INCIDENT_LINES_EXPECTED = 8;
+
+        if (lines.Length != LINES_EXPECTED &&
+            (lines.Length != LAST_INCIDENT_LINES_EXPECTED && !lines.Contains("Sex Offender State Website")))
         {
-            throw new FormatException("Unexpected crime block format.");
+            throw new FormatException($"Unexpected crime block format. Found: {lines.Length}");
         }
+
+        var occurredAt = lines[4].Replace("@", "").Trim();
 
         return new CrimeIncidentResource
         {
@@ -25,7 +31,7 @@ public class CrimeBlockParser : ICrimeBlockParser
             Description = lines[1],
             CaseNumber = lines[2],
             Address = lines[3],
-            OccurredAt = DateTime.Parse(lines[4]),
+            OccurredAt = DateTime.Parse(occurredAt),
             Agency = lines[5]
         };
     }

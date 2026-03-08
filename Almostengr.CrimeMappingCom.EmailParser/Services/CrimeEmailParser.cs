@@ -1,17 +1,19 @@
 using Almostengr.CrimeMappingCom.EmailParser.Services.Interfaces;
 using Almostengr.CrimeMappingCom.EmailParser.Services.Resources;
 using Almostengr.CrimeMappingCom.EmailParser.Shared;
+using Microsoft.Extensions.Options;
 
 namespace Almostengr.CrimeMappingCom.EmailParser.Services;
 
 public class CrimeEmailParser : ICrimeEmailParser
-{    
+{
     private readonly CrimeBlockParser _blockParser = new();
     private readonly CrimeMappingSettings _settings;
 
-    public CrimeEmailParser(CrimeMappingSettings settings)
+    public CrimeEmailParser(
+        IOptions<CrimeMappingSettings> settings)
     {
-        _settings = settings;   
+        _settings = settings.Value;
     }
 
     public CrimeAlertEmailResource Parse(string emailBody)

@@ -4,6 +4,18 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
+    <PackageId>Almostengr.CrimeMappingCom.EmailParser</PackageId>
+    <Company>Robinson Handy and Technology Services LLC</Company>
+    <Copyright>Copyright © $([System.DateTime]::UtcNow.ToString(yyyy)) Robinson Handy and Technology Services</Copyright>
+    <Product>Almostengr CrimeMapping.com Email Parser</Product>
+    <Authors>Kenny Robinson</Authors>
+    <Description>Read and parse the data content sent from crimemapping.com website.</Description>
+    <AssemblyName>Almostengr.CrimeMappingCom.EmailParser</AssemblyName>
+    <RootNamespace>Almostengr.CrimeMappingCom.EmailParser</RootNamespace>
+    <Version>9.$([System.DateTime]::UtcNow.ToString(yyyy.MM.ddHH))</Version>
+    <RepositoryUrl>https://github.com/almostengr/Almostengr.CrimeMappingCom.EmailParser.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/almostengr/Almostengr.CrimeMappingCom.EmailParser</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -22,7 +22,7 @@ public class JsonCrimeWriter : IJsonCrimeWriter
         ArgumentNullException.ThrowIfNull(incident);
         ArgumentException.ThrowIfNullOrWhiteSpace(_settings.OutputDirectory, nameof(_settings.OutputDirectory));
 
-        var path = Path.Combine(_settings.OutputDirectory, $"{incident.OccurredAt:yyyymmddhhMM}.json");
+        var path = Path.Combine(_settings.OutputDirectory, $"{incident.OccurredAt:yyyyMMddHHmmss}.json");
 
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
 
