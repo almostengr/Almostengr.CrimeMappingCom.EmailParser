@@ -84,18 +84,30 @@ In the Program.cs file, add the below to include all services within this librar
 builder.Services.AddCrimeMappingServices(builder.Configuration);
 ```
 
-In your service class, added the below code to read all of the unread emails.
+In your service method or class, added the below code to read all of the unread emails.
 
 ```csharp
-var emails = await _imapEmailReader.GetUnreadAsync();
-foreach (var email in emails)
+List<(MimeMessage, MailKit.UniqueId)> emails = await _imapEmailReader.GetUnreadAsync();
+List<MailKit.UniqueId> processedMessageIds = new();
+foreach (var (email, uid) in emails)
 {
-    var alert = _crimeEmailParser.Parse(email.TextBody);
-    foreach (var crime in alert.Incidents)
+    try
     {
-        _jsonCrimeWriter.Write(crime);
+        var alert = _crimeEmailParser.Parse(email.TextBody);
+        foreach (var crime in alert.Incidents)
+        {
+            _jsonCrimeWriter.Write(crime);
+        }
+        processedMessageIds.Add(uid);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex.Message);
+        continue;
     }
 }
+
+await _imapEmailReader.MarkReadAsync(processedMessageIds);
 ```
 
 Json files will be created for each of the incidents that was found in each of the emails.

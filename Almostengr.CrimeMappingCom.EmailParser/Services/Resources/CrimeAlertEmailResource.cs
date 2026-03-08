@@ -1,6 +1,6 @@
 namespace Almostengr.CrimeMappingCom.EmailParser.Services.Resources;
 
-public class CrimeAlertEmailResource
+public sealed class CrimeAlertEmailResource
 {
     public string ZipCode { get; set; }
     public DateTime Published { get; set; }

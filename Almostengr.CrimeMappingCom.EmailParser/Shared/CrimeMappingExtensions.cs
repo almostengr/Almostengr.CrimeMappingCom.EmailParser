@@ -1,5 +1,6 @@
 using Almostengr.CrimeMappingCom.EmailParser.Services;
 using Almostengr.CrimeMappingCom.EmailParser.Services.Interfaces;
+using MailKit.Net.Imap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ public static class CrimeMappingExtensions
     {
         services.Configure<CrimeMappingSettings>(configuration.GetSection(nameof(CrimeMappingSettings)));
 
+        services.AddTransient<IImapClient, ImapClient>();
         services.AddTransient<ICrimeBlockParser, CrimeBlockParser>();
         services.AddTransient<ICrimeEmailParser, CrimeEmailParser>();
         services.AddTransient<IImapEmailReader, ImapEmailReader>();

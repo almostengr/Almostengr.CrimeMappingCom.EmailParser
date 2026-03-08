@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace Almostengr.CrimeMappingCom.EmailParser.Services;
 
-public class JsonCrimeWriter : IJsonCrimeWriter
+public sealed class JsonCrimeWriter : IJsonCrimeWriter
 {
     private readonly CrimeMappingSettings _settings;
 
@@ -22,13 +22,12 @@ public class JsonCrimeWriter : IJsonCrimeWriter
         ArgumentNullException.ThrowIfNull(incident);
         ArgumentException.ThrowIfNullOrWhiteSpace(_settings.OutputDirectory, nameof(_settings.OutputDirectory));
 
-        var path = Path.Combine(_settings.OutputDirectory, $"{incident.OccurredAt:yyyyMMddHHmmss}.json");
+        string path = Path.Combine(_settings.OutputDirectory, $"{incident.OccurredAt:yyyyMMddHHmmss}.json");
 
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
 
-        var json = JsonSerializer.Serialize(
-            incident,
-            new JsonSerializerOptions { WriteIndented = true });
+        string json = JsonSerializer.Serialize(
+            incident, new JsonSerializerOptions { WriteIndented = true });
 
         File.AppendAllText(path, json + Environment.NewLine);
     }

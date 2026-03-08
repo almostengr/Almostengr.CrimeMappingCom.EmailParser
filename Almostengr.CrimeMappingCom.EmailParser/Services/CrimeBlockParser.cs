@@ -3,7 +3,7 @@ using Almostengr.CrimeMappingCom.EmailParser.Services.Resources;
 
 namespace Almostengr.CrimeMappingCom.EmailParser.Services;
 
-public class CrimeBlockParser : ICrimeBlockParser
+public sealed class CrimeBlockParser : ICrimeBlockParser
 {
     public CrimeIncidentResource Parse(string block)
     {

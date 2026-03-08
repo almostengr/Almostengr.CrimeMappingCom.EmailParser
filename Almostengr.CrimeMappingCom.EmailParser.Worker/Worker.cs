@@ -1,8 +1,9 @@
 using Almostengr.CrimeMappingCom.EmailParser.Services.Interfaces;
+using MimeKit;
 
 namespace Almostengr.CrimeMappingCom.EmailParser.Worker;
 
-public class Worker : BackgroundService
+public sealed class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
     private readonly ICrimeEmailParser _crimeEmailParser;
@@ -31,15 +32,27 @@ public class Worker : BackgroundService
         {
             _logger.LogInformation("CrimeMapping ingestion started");
 
-            var emails = await _imapEmailReader.GetUnreadAsync();
-            foreach (var email in emails)
+            List<(MimeMessage, MailKit.UniqueId)> emails = await _imapEmailReader.GetUnreadAsync();
+            List<MailKit.UniqueId> processedMessageIds = new();
+            foreach (var (email, uid) in emails)
             {
-                var alert = _crimeEmailParser.Parse(email.TextBody);
-                foreach (var crime in alert.Incidents)
+                try
                 {
-                    _jsonCrimeWriter.Write(crime);
+                    var alert = _crimeEmailParser.Parse(email.TextBody);
+                    foreach (var crime in alert.Incidents)
+                    {
+                        _jsonCrimeWriter.Write(crime);
+                    }
+                    processedMessageIds.Add(uid);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    continue;
                 }
             }
+
+            await _imapEmailReader.MarkReadAsync(processedMessageIds);
 
             _logger.LogInformation("CrimeMapping ingestion finished");
             _lifetime.StopApplication();

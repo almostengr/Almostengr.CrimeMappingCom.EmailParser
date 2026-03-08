@@ -2,22 +2,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Almostengr.CrimeMappingCom.EmailParser.Shared;
 
-public class CrimeMappingSettings
+public sealed class CrimeMappingSettings
 {
     [Required]
-    public string Hostname { get; set; }
+    public string Hostname { get; init; }
 
     [Required]
-    public string Username { get; set; }
+    public string Username { get; init; }
 
     [Required]
-    public string Password { get; set; }
+    public string Password { get; init; }
 
     [Required]
-    public int PortNumber { get; set; } = 993;
+    public int PortNumber { get; init; } = 993;
 
     [Required]
-    public string OutputDirectory { get; set; }
+    public string OutputDirectory { get; init; }
 
-    public string Separator { get; set; } = "—————————";
+    public string Separator { get; init; } = "—————————";
 }

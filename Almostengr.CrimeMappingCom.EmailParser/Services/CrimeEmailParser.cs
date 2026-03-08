@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Almostengr.CrimeMappingCom.EmailParser.Services;
 
-public class CrimeEmailParser : ICrimeEmailParser
+public sealed class CrimeEmailParser : ICrimeEmailParser
 {
     private readonly CrimeBlockParser _blockParser = new();
     private readonly CrimeMappingSettings _settings;
@@ -18,9 +18,8 @@ public class CrimeEmailParser : ICrimeEmailParser
 
     public CrimeAlertEmailResource Parse(string emailBody)
     {
-        var alert = new CrimeAlertEmailResource();
-
-        var sections = emailBody.Split(_settings.Separator);
+        CrimeAlertEmailResource alert = new();
+        string[] sections = emailBody.Split(_settings.Separator);
 
         foreach (var section in sections)
         {
