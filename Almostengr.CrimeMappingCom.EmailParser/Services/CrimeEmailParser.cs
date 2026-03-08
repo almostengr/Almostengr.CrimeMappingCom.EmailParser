@@ -1,0 +1,40 @@
+using Almostengr.CrimeMappingCom.EmailParser.Services.Interfaces;
+using Almostengr.CrimeMappingCom.EmailParser.Services.Resources;
+using Almostengr.CrimeMappingCom.EmailParser.Shared;
+using Microsoft.Extensions.Options;
+
+namespace Almostengr.CrimeMappingCom.EmailParser.Services;
+
+public sealed class CrimeEmailParser : ICrimeEmailParser
+{
+    private readonly CrimeBlockParser _blockParser = new();
+    private readonly CrimeMappingSettings _settings;
+
+    public CrimeEmailParser(
+        IOptions<CrimeMappingSettings> settings)
+    {
+        _settings = settings.Value;
+    }
+
+    public CrimeAlertEmailResource Parse(string emailBody)
+    {
+        CrimeAlertEmailResource alert = new();
+        string[] sections = emailBody.Split(_settings.Separator);
+
+        foreach (var section in sections)
+        {
+            if (IsCrimeBlock(section))
+            {
+                var incident = _blockParser.Parse(section);
+                alert.Incidents.Add(incident);
+            }
+        }
+
+        return alert;
+    }
+
+    private bool IsCrimeBlock(string section)
+    {
+        return section.Contains("BLOCK");
+    }
+}
