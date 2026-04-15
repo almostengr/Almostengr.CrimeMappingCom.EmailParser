@@ -1,6 +1,8 @@
+using Almostengr.Common.DomainServices.Resources;
+
 namespace Almostengr.CrimeMappingCom.EmailParser.Services.Resources;
 
-public sealed class CrimeIncidentResource
+public sealed class CrimeIncidentResource : Resource
 {
     public string Category { get; set; }
     public string Description { get; set; }
