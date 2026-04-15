@@ -24,9 +24,9 @@ This library allows you to parse those emails in your C# application and save th
 in JSON format for use within your application.
 
 
-## Installation 
+## Installation
 
-Using the terminal, navigate to your project's application directory. Then run the 
+Using the terminal, navigate to your project's application directory. Then run the
 commands below.
 
 ```bash
@@ -41,17 +41,18 @@ The package will download and install.
 
 ### appsettings.json
 
-Add the below to your appsettings.json file.  This file is used to configure the 
+Add the below to your appsettings.json file.  This file is used to configure the
 library and its functions.
 
 ```json
 {
-    "CrimeMappingSettings": { 
+    "CrimeMappingSettings": {
         "Hostname": "mail.example.com",
         "Username" : "emailuser",
         "Password":  "emailpass",
         "PortNumber": 993,
         "OutputDirectory" : "/home/almostengr/crimedata",
+        "Separator": "—————————",
     }
 }
 ```
@@ -60,7 +61,7 @@ library and its functions.
 
 The address of the email server that will be receiving the email alerts.
 
-#### Username 
+#### Username
 
 The username of the account that will be receiving the email alerts.
 
@@ -70,11 +71,19 @@ The password of the email account that will be receiving the email alerts.
 
 #### PortNumber
 
-The port number of the server that should be used to connect to the email server. 
+The port number of the server that should be used to connect to the email server.
+
+Defaults to 993.
 
 #### OutputDirectory
 
 The location on the file system, that the json files will be written to for further use.
+
+#### Separator
+
+The separator that is used to divide multiple crime reports within the same email.
+
+Defaults to "—————————".
 
 
 ### Add Dependency Injection
@@ -87,7 +96,7 @@ builder.Services.AddCrimeMappingServices(builder.Configuration);
 
 ### Write Data to File System
 
-To write each data record to a JSON file, add the below to 
+To write each data record to a JSON file, add the below to
 your service method or class. The directory that the files are written to, is defined
 in the appsettings.json file.
 
@@ -117,7 +126,7 @@ await _imapEmailReader.MarkReadAsync(processedMessageIds);
 
 ### Write Data to Database Using EF (Entity Framework)
 
-To write each data record to the database using Entity Framework add below to your 
+To write each data record to the database using Entity Framework add below to your
 service method or class.
 
 ```csharp
@@ -166,7 +175,7 @@ These updates include new features, general improvements, and any necessary fixe
 
 ## Contributions
 
-To contribute, you may 
+To contribute, you may
 
 * create an issue using the appropriate template on the project repository.
 * create a pull request with your code changes to the project repository.
