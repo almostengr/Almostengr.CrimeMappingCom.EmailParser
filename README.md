@@ -14,10 +14,10 @@
 Read email alerts that have been received from the CrimeMapping.com website.
 This library is designed to read plain text emails that are sent from the site.
 
-Crimemapping.com does not provide an API to retrive the information that is available
+Crimemapping.com does not provide an API to retrieve the information that is available
 on their website. They do allow for users to subscribe to email alerts that are sent
-from the website. When subscribimg to the email alerts, the same email address can
-be used to receive mutliple alerts to the same email address.
+from the website. When subscribing to the email alerts, the same email address can
+be used to receive multiple alerts to the same email address.
 
 This library allows you to parse those emails in your C# application and save them
 in JSON format for use within your application.
@@ -84,7 +84,7 @@ In the Program.cs file, add the below to include all services within this librar
 builder.Services.AddCrimeMappingServices(builder.Configuration);
 ```
 
-In your service method or class, added the below code to read all of the unread emails.
+In your service method or class, add the below code to read all of the unread emails.
 
 ```csharp
 List<(MimeMessage, MailKit.UniqueId)> emails = await _imapEmailReader.GetUnreadAsync();
